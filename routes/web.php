@@ -63,9 +63,6 @@ Route::middleware(['auth', 'role:patient', 'verified'])->prefix('patient')->grou
     });
 });
 
-// Rute untuk Verifikator
-// Anda bisa membedakan verifikator1 dan verifikator2 jika perlu,
-// tapi untuk dashboard awal, kita bisa gabungkan dulu.
 Route::middleware(['auth', 'role:v1'])->prefix('verifikator1', 'verified')->group(function () {
     Route::get('/dashboard', [VerifierController::class, 'index'])->name('verifier1.dashboard');
     Route::post('/applications/{application}/verify-v1', [ApplicationController::class, 'verifyV1'])->name('applications.verify.v1');
@@ -80,7 +77,6 @@ Route::middleware(['auth'])->prefix('applications')->group(function () {
     Route::post('/{application}/reject', [ApplicationController::class, 'reject'])->name('applications.reject');
 });
 
-// Rute untuk Admin
 Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users/create', [App\Http\Controllers\AdminController::class, 'createUserForm'])->name('admin.users.create');
