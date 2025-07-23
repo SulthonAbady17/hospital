@@ -56,9 +56,10 @@ class ApplicationController extends Controller
     // Memperbarui permohonan
     public function update(Request $request, Application $application)
     {
+        dd($request->all());
         // Validasi input
         $request->validate([
-            'referral_letter' => 'nullable|mimes:pdf|max:2048',
+            'referral_letter' => 'required|mimes:pdf|max:2048',
         ]);
 
         // Jika ada file baru, simpan dan update path
