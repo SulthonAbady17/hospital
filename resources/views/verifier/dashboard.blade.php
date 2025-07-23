@@ -69,7 +69,7 @@
                                             class="btn btn-danger">
                                             Tolak
                                         </a>
-
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
@@ -101,11 +101,16 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <form action="{{ route('applications.verify.v2', $application->id) }}"
+                                        <form action="{{ route('applications.verify.v1', $application->id) }}"
                                             method="POST" style="display: inline-block;">
                                             @csrf
                                             <button type="submit" class="btn btn-success btn-sm">Terima</button>
                                         </form>
+                                        <a href="{{ route('applications.reject.form', $application->id) }}"
+                                            class="btn btn-danger">
+                                            Tolak
+                                        </a>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>

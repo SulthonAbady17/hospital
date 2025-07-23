@@ -85,6 +85,9 @@ Route::middleware(['auth', 'role:admin', 'verified'])->prefix('admin')->group(fu
     Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/users/create', [App\Http\Controllers\AdminController::class, 'createUserForm'])->name('admin.users.create');
     Route::post('/users', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::get('/users/{user}/edit', [App\Http\Controllers\AdminController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{user}', [App\Http\Controllers\AdminController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{user}', [App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.users.destroy');
 });
 // Rute untuk halaman yang tidak memiliki akses (jika redirect dari middleware)
 Route::get('/unauthorized', function () {

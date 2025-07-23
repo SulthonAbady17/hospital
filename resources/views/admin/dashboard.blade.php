@@ -33,6 +33,7 @@
                             <th>Nama</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <td>Aksi</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +60,17 @@
                                                 break;
                                         }
                                     @endphp
+                                </td>
+                                <td>
+                                    <a href="{{ route('admin.users.edit', $user->id) }}"
+                                        class="btn btn-info btn-sm">Edit</a>
+                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?')">Hapus</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach

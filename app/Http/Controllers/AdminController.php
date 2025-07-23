@@ -66,4 +66,44 @@ class AdminController extends Controller
         // Arahkan kembali ke dashboard admin dengan pesan sukses yang akan ditampilkan di view.
         return redirect()->route('admin.dashboard')->with('success', 'Akun ' . $user->name . ' (' . $user->role . ') berhasil dibuat. Email verifikasi telah dikirim.');
     }
+
+    public function edit(User $user)
+    {
+        // Pastikan hanya admin yang bisa mengakses halaman ini
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('admin.edit_user', compact('user'));
+    }
+
+    public function update(Request $request, User $user)
+    {
+        // Validasi data yang diterima
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'role' => 'required|in:patient,v1,v2,admin',
+        ]);
+
+        // Update data pengguna
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->role = $request->role;
+
+        // Simpan perubahan
+        $user->save();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Pengguna berhasil diperbarui.');
+    }
+
+    public function destroy(User $user)
+    {
+        if (!Auth::user()->isAdmin()) {
+            abort(403, 'Unauthorized action.');
+        }
+        $user->delete();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Pengguna berhasil dihapus.');
+    }
 }
